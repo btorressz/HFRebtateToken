@@ -1,0 +1,872 @@
+{
+	"compiler": {
+		"version": "0.8.28+commit.7893614a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_hfrtToken",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_feeDiscount",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "OwnableInvalidOwner",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "OwnableUnauthorizedAccount",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "proposalId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "proposer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "votingDeadline",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "executionTime",
+						"type": "uint256"
+					}
+				],
+				"name": "DAOProposalCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "proposalId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "newFeeDiscount",
+						"type": "uint8"
+					}
+				],
+				"name": "DAOProposalExecuted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "trader",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rebateAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "RebateClaimed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "trader",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rebateAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "RebateIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "burnAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "TokensBurned",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "trader",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "tradeAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rollingVolume",
+						"type": "uint256"
+					}
+				],
+				"name": "TradeRecorded",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "autoCompound",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "traderAddresses",
+						"type": "address[]"
+					}
+				],
+				"name": "batchClaimRebate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "proposalIds",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "bool[]",
+						"name": "votes",
+						"type": "bool[]"
+					}
+				],
+				"name": "batchVoteDAOProposal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "buyBackAndBurn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "stakeStartTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "calculateDynamicUnstakePenalty",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tradeVolume",
+						"type": "uint256"
+					}
+				],
+				"name": "calculateRebateMultiplier",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "claimRebate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "proposalId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "newFeeDiscount",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "votingPeriod",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timeLock",
+						"type": "uint256"
+					}
+				],
+				"name": "createDAOProposal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "daoProposals",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "proposalId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "proposer",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "newFeeDiscount",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "votesFor",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "votesAgainst",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "votingDeadline",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "executionTime",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "executed",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "proposalId",
+						"type": "uint256"
+					}
+				],
+				"name": "executeDAOProposal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "feeDiscount",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "trader",
+						"type": "address"
+					}
+				],
+				"name": "getExecutionPriority",
+				"outputs": [
+					{
+						"internalType": "uint8",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "governanceConfig",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "authority",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "rebateRate",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "maxFeeDiscount",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "hfrtToken",
+				"outputs": [
+					{
+						"internalType": "contract IERC20Mintable",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "_rebateRate",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_maxFeeDiscount",
+						"type": "uint8"
+					}
+				],
+				"name": "initializeGovernance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "lastStakeTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "lastTradeTime",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "tradeAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "recordTrade",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "stakeTokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "traders",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "rollingVolume",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastTradeUpdate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "stakedAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "stakeStartTime",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "unstakeTokens",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint8",
+						"name": "newRate",
+						"type": "uint8"
+					}
+				],
+				"name": "updateRebateRate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "proposalId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "voteFor",
+						"type": "bool"
+					}
+				],
+				"name": "voteDAOProposal",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "A Solidity version of the HFRT project, enhanced for Ethereum. Features include:  - Global state & governance configuration (rebate rate, fee discount)  - 24-hour rolling trade volume tracking with sybil resistance (trade cooldown)  - Rebate claiming (both single and batch)  - Staking/unstaking with dynamic penalty and flash loan resistance via stake lockup  - Auto-compounding of staking rewards  - DAO proposals with batch voting and time-lock for execution  - Execution priority based on token holdings  - A buy-back and burn mechanism",
+			"errors": {
+				"OwnableInvalidOwner(address)": [
+					{
+						"details": "The owner is not a valid owner account. (eg. `address(0)`)"
+					}
+				],
+				"OwnableUnauthorizedAccount(address)": [
+					{
+						"details": "The caller account is not authorized to perform an operation."
+					}
+				]
+			},
+			"kind": "dev",
+			"methods": {
+				"batchClaimRebate(address[])": {
+					"params": {
+						"traderAddresses": "The list of trader addresses to process."
+					}
+				},
+				"batchVoteDAOProposal(uint256[],bool[])": {
+					"params": {
+						"proposalIds": "An array of proposal IDs.",
+						"votes": "An array of booleans indicating votes (true for for, false for against)."
+					}
+				},
+				"calculateDynamicUnstakePenalty(uint256,uint256,uint256)": {
+					"params": {
+						"amount": "The unstaking amount.",
+						"currentTime": "The current timestamp.",
+						"stakeStartTime": "The timestamp when staking started."
+					},
+					"returns": {
+						"_0": "The penalty amount."
+					}
+				},
+				"calculateRebateMultiplier(uint256)": {
+					"params": {
+						"tradeVolume": "The trading volume."
+					},
+					"returns": {
+						"_0": "A multiplier value."
+					}
+				},
+				"createDAOProposal(uint256,uint8,uint256,uint256)": {
+					"params": {
+						"newFeeDiscount": "The proposed new fee discount.",
+						"proposalId": "The unique ID for the proposal.",
+						"timeLock": "Duration (in seconds) after voting ends before execution.",
+						"votingPeriod": "Duration (in seconds) during which voting is allowed."
+					}
+				},
+				"executeDAOProposal(uint256)": {
+					"params": {
+						"proposalId": "The ID of the proposal."
+					}
+				},
+				"getExecutionPriority(address)": {
+					"params": {
+						"trader": "The address of the trader."
+					}
+				},
+				"initializeGovernance(uint8,uint8)": {
+					"params": {
+						"_maxFeeDiscount": "The maximum allowed fee discount.",
+						"_rebateRate": "The rebate rate (e.g., 10 means 1% rebate)."
+					}
+				},
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"recordTrade(uint256)": {
+					"params": {
+						"tradeAmount": "The trade amount."
+					}
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+				},
+				"stakeTokens(uint256)": {
+					"params": {
+						"amount": "The amount of tokens to stake."
+					}
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				},
+				"unstakeTokens(uint256)": {
+					"params": {
+						"amount": "The amount of tokens to unstake."
+					}
+				},
+				"updateRebateRate(uint8)": {
+					"params": {
+						"newRate": "The new rebate rate."
+					}
+				},
+				"voteDAOProposal(uint256,bool)": {
+					"params": {
+						"proposalId": "The ID of the proposal.",
+						"voteFor": "True to vote in favor; false to vote against."
+					}
+				}
+			},
+			"title": "HFRebtateToken",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"autoCompound()": {
+					"notice": "Auto-compounds staking rewards by minting rebate tokens to the contract and adding them to the trader's staked amount."
+				},
+				"batchClaimRebate(address[])": {
+					"notice": "Batch claim rebates for an array of trader addresses."
+				},
+				"batchVoteDAOProposal(uint256[],bool[])": {
+					"notice": "Batch votes on multiple DAO proposals."
+				},
+				"buyBackAndBurn()": {
+					"notice": "Executes a buy-back and burn of 10% of the tokens held by this contract. Only callable by the owner."
+				},
+				"calculateDynamicUnstakePenalty(uint256,uint256,uint256)": {
+					"notice": "Calculates a dynamic unstake penalty based on staking duration. Penalty: 10% if staked less than 7 days, 5% if less than 14 days, 2% otherwise."
+				},
+				"calculateRebateMultiplier(uint256)": {
+					"notice": "Calculates a multiplier for the rebate based on 24‑hour trading volume."
+				},
+				"claimRebate()": {
+					"notice": "Claims an HFRT rebate based on the recorded 24‑hour trading volume. The rebate is computed using the governance rebate rate and a volume multiplier."
+				},
+				"constructor": {
+					"notice": "Constructor sets the token address and initial fee discount. The Ownable constructor is called with msg.sender as the initial owner."
+				},
+				"createDAOProposal(uint256,uint8,uint256,uint256)": {
+					"notice": "Creates a new DAO proposal to update the fee discount."
+				},
+				"executeDAOProposal(uint256)": {
+					"notice": "Executes a DAO proposal if it has passed and the time lock has expired."
+				},
+				"getExecutionPriority(address)": {
+					"notice": "Returns an execution priority based on the trader's HFRT token balance. Lower numbers indicate higher priority."
+				},
+				"initializeGovernance(uint8,uint8)": {
+					"notice": "Initializes the governance configuration."
+				},
+				"recordTrade(uint256)": {
+					"notice": "Records a trade by updating the trader’s 24‑hour rolling volume. Applies a trade cooldown (minimum 5 seconds) and checks for potential wash trading."
+				},
+				"stakeTokens(uint256)": {
+					"notice": "Stakes HFRT tokens by transferring them from the trader to this contract. Uses a flash loan prevention mechanism (stake lockup of 1 day)."
+				},
+				"unstakeTokens(uint256)": {
+					"notice": "Unstakes HFRT tokens and applies a dynamic unstake penalty based on staking duration."
+				},
+				"updateRebateRate(uint8)": {
+					"notice": "Updates the rebate rate. Only callable by the owner (governance authority)."
+				},
+				"voteDAOProposal(uint256,bool)": {
+					"notice": "Votes on an existing DAO proposal."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/HFRebtateToken.sol": "HFRebtateToken"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/access/Ownable.sol": {
+			"keccak256": "0xff6d0bb2e285473e5311d9d3caacb525ae3538a80758c10649a4d61029b017bb",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8ed324d3920bb545059d66ab97d43e43ee85fd3bd52e03e401f020afb0b120f6",
+				"dweb:/ipfs/QmfEckWLmZkDDcoWrkEvMWhms66xwTLff9DDhegYpvHo1a"
+			]
+		},
+		"@openzeppelin/contracts/security/ReentrancyGuard.sol": {
+			"keccak256": "0xa535a5df777d44e945dd24aa43a11e44b024140fc340ad0dfe42acf4002aade1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://41319e7f621f2dc3733511332c4fd032f8e32ad2aa7fd6f665c19741d9941a34",
+				"dweb:/ipfs/QmcYR3bd862GD1Bc7jwrU9bGxrhUu5na1oP964bDCu2id1"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xe06a3f08a987af6ad2e1c1e774405d4fe08f1694b67517438b467cecf0da0ef7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://df6f0c459663c9858b6cba2cda1d14a7d05a985bed6d2de72bd8e78c25ee79db",
+				"dweb:/ipfs/QmeTTxZ7qVk9rjEv2R4CpCwdf8UMCcRqDNMvzNxHc3Fnn9"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
+			]
+		},
+		"contracts/HFRebtateToken.sol": {
+			"keccak256": "0x98bba895e348a69c70e8a78a96c9e9ea543195ded85f5e0be276e3561d9a977f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://093e1b84d808a2c4ca256287c7bf9bc741d3726cfd61ed5062fd0debda26498f",
+				"dweb:/ipfs/QmeeL3xD5q5XgpJApX6GHVr7ocb2RcM9Lffhd5Yq4YHssH"
+			]
+		}
+	},
+	"version": 1
+}
